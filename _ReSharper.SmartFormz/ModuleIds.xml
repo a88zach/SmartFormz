@@ -1,7 +1,0 @@
-<Modules>
-  <Module PersistentId="F3E5FA59-3C9C-409E-966F-8179BB9A6B35" ModuleId="SmartFormz.Business" />
-  <Module PersistentId="0E793D30-F1F7-4523-9DE3-4379956DEC78" ModuleId="SmartFormz.Data" />
-  <Module PersistentId="4D345B0A-4EA2-4B20-A2F3-C1302BD691D1" ModuleId="SmartFormz.Web.Admin" />
-  <Module PersistentId="E5EDB6F1-36E0-4E8C-A545-4DF43971784F" ModuleId="SmartFormz.Services" />
-  <Module PersistentId="C73A61AB-7998-4BF0-9C43-428D1296379B" ModuleId="SmartFormz.WebApi" />
-</Modules>
