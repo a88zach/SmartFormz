@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Business", "Smar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Data", "SmartFormz.Data\SmartFormz.Data.csproj", "{0E793D30-F1F7-4523-9DE3-4379956DEC78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Web.Admin", "SmartFormz.Web.Admin\SmartFormz.Web.Admin.csproj", "{4D345B0A-4EA2-4B20-A2F3-C1302BD691D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Web", "SmartFormz.Web\SmartFormz.Web.csproj", "{4D345B0A-4EA2-4B20-A2F3-C1302BD691D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E1A8EAC0-6993-4AB1-91E9-53EDE26813E7}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,0 +1,15 @@
+﻿@using Newtonsoft.Json
+@model System.Collections.Generic.List<SmartFormz.Web.Models.TreeViewModel>
+
+<link href="~/Content/plugins/jqTree/jqtree.css" rel="stylesheet" />
+
+<div id="folderTree" data-url="@Url.Action("ChildFolders")"></div>
+
+<script src="~/Scripts/tree.jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#folderTree').tree({
+            data: @Html.Raw(JsonConvert.SerializeObject(Model))
+            });
+    });
+</script>
