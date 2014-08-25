@@ -9,6 +9,6 @@ namespace SmartFormz.Business.DataInterfaces
 {
     public interface IFolderRepository : IRepository<Folder, long>
     {
-        ICollection<Folder> GetChildFolders(long parentId);
+        ICollection<Folder> GetFolderTreeNode(long? parentId);
     }
 }

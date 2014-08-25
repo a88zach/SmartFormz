@@ -1,47 +1,51 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
+using SmartFormz.Business.Models.Folder;
 using SmartFormz.Services.Folder;
 using SmartFormz.Web.Models;
+using SmartFormz.Web.Models.JsViewModels;
 
 namespace SmartFormz.Web.Controllers
 {
-    public class FolderController : Controller
+    public class FolderController : SmartFormzController
     {
-        // GET: Folder
-        public PartialViewResult RootFolders()
+        public JsonResult GetFormTree(string id)
         {
-            var model = new List<TreeViewModel>();
-            var request = new GetChildFoldersRequest {Message = {ParentId = 1}};
-            var data = request.Execute();
-
-            foreach (var folder in data)
+            ICollection<Folder> folders;
+            if (id == "#")
             {
-                model.Add(new TreeViewModel()
+                var message = new GetFolderTreeNodeMessage
                 {
-                    label = folder.Name,
-                    id = folder.FolderId,
-                    load_on_demand = true
-                });
+                    ParentId = null
+                };
+                folders = new GetFolderTreeNodeRequest
+                {
+                    Message = message
+                }.Execute();
             }
-            return PartialView("_Folders", model);
-        }
-
-        public JsonResult ChildFolders(long node)
-        {
-            var model = new List<TreeViewModel>();
-            var request = new GetChildFoldersRequest { Message = { ParentId = node } };
-            var data = request.Execute();
-
-            foreach (var folder in data)
+            else
             {
-                model.Add(new TreeViewModel()
+                var message = new GetFolderTreeNodeMessage
                 {
-                    label = folder.Name,
-                    id = folder.FolderId,
-                    load_on_demand = true
-                });
+                    ParentId = long.Parse(id)
+                };
+                folders = new GetFolderTreeNodeRequest
+                {
+                    Message = message
+                }.Execute();
             }
-            return Json(model, JsonRequestBehavior.AllowGet);
+
+            var folderList = folders.Select(f => new JsTreeResult
+            {
+                id = f.Id.ToString(CultureInfo.InvariantCulture), 
+                text = f.Name, 
+                type = "folder",
+                children = true
+            }).ToList();
+
+            return Json(folderList, JsonRequestBehavior.AllowGet);
         }
     }
 }

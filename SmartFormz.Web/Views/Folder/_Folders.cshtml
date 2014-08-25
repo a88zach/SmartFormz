@@ -1,15 +1,110 @@
-﻿@using Newtonsoft.Json
-@model System.Collections.Generic.List<SmartFormz.Web.Models.TreeViewModel>
+﻿<div id="tree"></div>
 
-<link href="~/Content/plugins/jqTree/jqtree.css" rel="stylesheet" />
-
-<div id="folderTree" data-url="@Url.Action("ChildFolders")"></div>
-
-<script src="~/Scripts/tree.jquery.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#folderTree').tree({
-            data: @Html.Raw(JsonConvert.SerializeObject(Model))
-            });
+    $(document).ready(function () {
+        var $tree = $('#tree');
+        $tree.on('create_node.jstree', function (e, data) {
+            debugger;
+        }).on('rename_node.jstree', function (e, data) {
+            debugger;
+        }).on('delete_node.jstree', function (e, data) {
+            debugger;
+        }).jstree({
+            core: {
+                animation: 0,
+                multiple: true,
+                themes: {
+                    icons: true,
+                    stripes: true
+                },
+                data: {
+                    url: '@Url.Action("GetFormTree", "Folder")',
+                    data: function (node) {
+                        return {
+                            'id': node.id
+                        };
+                    }
+                },
+                check_callback: true
+            },
+            contextmenu: {
+                items: function (o) {
+                    if (o.id === "1") {
+                        return {};
+                    }
+                    return {
+                        'addfolder': {
+                            label: 'Add Folder',
+                            action: function (data) {
+                                var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                                inst.create_node(obj, {
+                                    text: 'New Folder',
+                                    type: 'folder'
+                                }, "last", function (newNode) {
+                                    setTimeout(function () { inst.edit(newNode); }, 0);
+                                });
+                            }
+                        },
+                        'addform': {
+                            label: 'Add Form',
+                            action: function (data) {
+                                var inst = $.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                inst.create_node(obj, {
+                                    text: 'New Form',
+                                    type: 'form'
+                                }, "last", function (newNode) {
+                                    setTimeout(function () { inst.edit(newNode); }, 0);
+                                });
+                            }
+                        },
+                        "rename": {
+                            separator_before: true,
+                            label: "Rename",
+                            action: function (data) {
+                                var inst = $.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                inst.edit(obj);
+                            }
+                        },
+                        "remove": {
+                            separator_before: true,
+                            label: "Delete",
+                            action: function (data) {
+                                var inst = $.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                if (inst.is_selected(obj)) {
+                                    inst.delete_node(inst.get_selected());
+                                }
+                                else {
+                                    inst.delete_node(obj);
+                                }
+                            }
+                        },
+                    }
+                }
+            },
+            types: {
+                "#": {
+                    max_children: 1,
+                    max_depth: 4,
+                    valid_children: ["root"]
+                },
+                "root": {
+                    icon: 'fa fa-folder',
+                    valid_children: ["folder"]
+                },
+                "folder": {
+                    icon: 'fa fa-folder',
+                    valid_children: ["folder", "form"]
+                },
+                "form": {
+                    icon: "fa fa-bar-chart-o",
+                    valid_children: []
+                }
+            },
+            plugins: ["contextmenu", "types"]
+        });
     });
 </script>

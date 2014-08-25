@@ -10,7 +10,7 @@ namespace SmartFormz.Data.Repositories
 {
     public class FolderRepository : BaseRepository<Folder, long>, IFolderRepository
     {
-        public ICollection<Folder> GetChildFolders(long parentId)
+        public ICollection<Folder> GetFolderTreeNode(long? parentId)
         {
             return DbContext.Folder.Where(x => x.ParentId == parentId).ToList();
         }

@@ -16,7 +16,7 @@ namespace SmartFormz.Data.Infrastructure
             var rootFolder = new Folder
             {
                 FolderId = 1,
-                Name = "Root"
+                Name = "SmartFormz"
             };
             var mainFolder = new Folder
             {

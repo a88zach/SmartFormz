@@ -1,6 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "SmartFormz Designer";
 }
 
+<div class="row">
+    <div class="col-xs-3">
+        @Html.Partial("~/Views/Folder/_Folders.cshtml")
+    </div>
+    <div class="col-xs-9">
 
-@Html.Action("RootFolders","Folder")
+    </div>
+</div>
