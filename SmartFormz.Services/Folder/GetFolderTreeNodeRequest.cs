@@ -1,27 +1,29 @@
 ﻿using System.Collections.Generic;
+using MediatR;
 using SmartFormz.Business.DataInterfaces;
 using SmartFormz.Data.Repositories;
 
 namespace SmartFormz.Services.Folder
 {
-    public class GetFolderTreeNodeMessage : IMessage
+    public class GetFolderTreeNodeRequest : IRequest<ICollection<Business.Models.Folder.Folder>>
     {
         public long? ParentId { get; set; }
     }
-    public class GetFolderTreeNodeRequest : IRequest<GetFolderTreeNodeMessage, ICollection<Business.Models.Folder.Folder>>
-    {
-        public GetFolderTreeNodeMessage Message { get; set; }
-        private  IFolderRepository Repo { get; set; }
 
-        public GetFolderTreeNodeRequest()
+    public class GetFolderTreeNodeRequestHandler :
+        IRequestHandler<GetFolderTreeNodeRequest, ICollection<Business.Models.Folder.Folder>>
+    {
+        private readonly IFolderRepository _repo;
+
+        public GetFolderTreeNodeRequestHandler(IFolderRepository repo)
         {
-            Message = new GetFolderTreeNodeMessage();
-            Repo = new FolderRepository();
+            _repo = repo;
         }
 
-        public ICollection<Business.Models.Folder.Folder> Execute()
+
+        public ICollection<Business.Models.Folder.Folder> Handle(GetFolderTreeNodeRequest message)
         {
-            return Repo.GetFolderTreeNode(Message.ParentId);
+            return _repo.GetFolderTreeNode(message.ParentId);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using SmartFormz.Business.Models.Authentication;
+using SmartFormz.Data.Infrastructure;
 using SmartFormz.Web.Models;
 
 namespace SmartFormz.Web.Controllers

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using NodaTime;
 using SmartFormz.Business.Configuration;
 using SmartFormz.Business.Models.Folder;
@@ -11,7 +12,7 @@ using SmartFormz.Business.Models.Form.Interfaces;
 
 namespace SmartFormz.Data.Infrastructure
 {
-    public class SmartFormzContext : DbContext
+    public class SmartFormzContext : IdentityDbContext<ApplicationUser>
     {
         private static readonly string DefaultConnectionString = ((SmartFormzConfiguration)ConfigurationManager.GetSection("smartFormzConfiguration")).ConnectionString;
 
@@ -20,6 +21,13 @@ namespace SmartFormz.Data.Infrastructure
         {
         }
         public SmartFormzContext(string connStr) : base(connStr) { }
+
+        public static SmartFormzContext Create()
+        {
+            return new SmartFormzContext();
+        }
+
+
         //Folder
         public DbSet<Folder> Folder { get; set; }
         //Form
@@ -76,7 +84,7 @@ namespace SmartFormz.Data.Infrastructure
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

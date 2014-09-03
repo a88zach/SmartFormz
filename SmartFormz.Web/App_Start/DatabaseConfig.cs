@@ -3,22 +3,11 @@ using System.Data.Entity;
 using SmartFormz.Business.Exceptions;
 using SmartFormz.Data.Infrastructure;
 
-namespace SmartFormz.Services.Startup
+namespace SmartFormz.Web
 {
-    public class InitializeDatabaseMessage : IMessage
+    public class DatabaseConfig
     {
-        
-    }
-    public class InitializeDatabaseRequest : IRequest<InitializeDatabaseMessage>
-    {
-        public InitializeDatabaseMessage Message { get; set; }
-
-        public InitializeDatabaseRequest()
-        {
-            Message = new InitializeDatabaseMessage();
-        }
-
-        public void Execute()
+        public static void InitDb()
         {
             try
             {
@@ -32,8 +21,5 @@ namespace SmartFormz.Services.Startup
                 throw new DatabaseNotInitializedException("Could not create or migrate database", ex);
             }
         }
-
-
     }
-
 }

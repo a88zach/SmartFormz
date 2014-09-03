@@ -1,31 +1,30 @@
 ﻿using System.Threading.Tasks;
+using MediatR;
 using SmartFormz.Business.DataInterfaces;
 using SmartFormz.Business.ResultModels;
 using SmartFormz.Data.Repositories;
 
 namespace SmartFormz.Services.Folder
 {
-    public class SaveFolderMessage : IMessage
+
+    public class SaveFolderRequest : IAsyncRequest<SaveResult<Business.Models.Folder.Folder>>
     {
         public Business.Models.Folder.Folder Folder { get; set; }
     }
 
-    public class SaveFolderRequest : IAsyncRequest<SaveFolderMessage, SaveResult<Business.Models.Folder.Folder>>
+    public class SaveFolderRequestHandler :
+        IAsyncRequestHandler<SaveFolderRequest, SaveResult<Business.Models.Folder.Folder>>
     {
-        public SaveFolderMessage Message { get; set; }
-        private IFolderRepository _repo;
+        private readonly IFolderRepository _repo;
 
-        public SaveFolderRequest()
+        public SaveFolderRequestHandler(IFolderRepository repo)
         {
-            Message = new SaveFolderMessage();
-            _repo = new FolderRepository();
+            _repo = repo;
         }
 
-        public async Task<SaveResult<Business.Models.Folder.Folder>> Execute()
+        public async Task<SaveResult<Business.Models.Folder.Folder>> Handle(SaveFolderRequest message)
         {
-            return await _repo.SaveAsync(Message.Folder);
+            return await _repo.SaveAsync(message.Folder);
         }
-
-
     }
 }

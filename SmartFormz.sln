@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Core", "SmartFormz.Core\SmartFormz.Core.csproj", "{5E7EB9C0-6F8F-4E8A-9711-83C69FB6A27A}"
 EndProject
@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E1A8EA
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Services", "SmartFormz.Services\SmartFormz.Services.csproj", "{E5EDB6F1-36E0-4E8C-A545-4DF43971784F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Business.Tests", "SmartFormz.Business.Tests\SmartFormz.Business.Tests.csproj", "{D85E29DF-107B-48C2-AB27-96BCC8C2DE82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFormz.Web.Tests", "SmartFormz.Web.Tests\SmartFormz.Web.Tests.csproj", "{32B603AF-C533-43B0-A9EA-E7AA675CC36D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +50,14 @@ Global
 		{E5EDB6F1-36E0-4E8C-A545-4DF43971784F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5EDB6F1-36E0-4E8C-A545-4DF43971784F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5EDB6F1-36E0-4E8C-A545-4DF43971784F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D85E29DF-107B-48C2-AB27-96BCC8C2DE82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D85E29DF-107B-48C2-AB27-96BCC8C2DE82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D85E29DF-107B-48C2-AB27-96BCC8C2DE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D85E29DF-107B-48C2-AB27-96BCC8C2DE82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32B603AF-C533-43B0-A9EA-E7AA675CC36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B603AF-C533-43B0-A9EA-E7AA675CC36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B603AF-C533-43B0-A9EA-E7AA675CC36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B603AF-C533-43B0-A9EA-E7AA675CC36D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,10 @@
 ﻿using System.Web.Mvc;
+using MediatR;
 
 namespace SmartFormz.Web.Controllers
 {
-    public class SmartFormzController : Controller
+    public abstract class SmartFormzController : Controller
     {
-        
+        public IMediator Mediator { get; set; }
     }
 }

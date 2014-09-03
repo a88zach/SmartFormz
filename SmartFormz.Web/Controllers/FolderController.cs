@@ -16,25 +16,17 @@ namespace SmartFormz.Web.Controllers
             ICollection<Folder> folders;
             if (id == "#")
             {
-                var message = new GetFolderTreeNodeMessage
+                folders = Mediator.Send(new GetFolderTreeNodeRequest
                 {
                     ParentId = null
-                };
-                folders = new GetFolderTreeNodeRequest
-                {
-                    Message = message
-                }.Execute();
+                });
             }
             else
             {
-                var message = new GetFolderTreeNodeMessage
+                folders = Mediator.Send(new GetFolderTreeNodeRequest
                 {
                     ParentId = long.Parse(id)
-                };
-                folders = new GetFolderTreeNodeRequest
-                {
-                    Message = message
-                }.Execute();
+                });
             }
 
             var folderList = folders.Select(f => new JsTreeResult
