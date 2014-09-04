@@ -9,10 +9,11 @@ using SmartFormz.Business.Configuration;
 using SmartFormz.Business.Models.Folder;
 using SmartFormz.Business.Models.Form;
 using SmartFormz.Business.Models.Form.Interfaces;
+using SmartFormz.Business.Models.Security;
 
 namespace SmartFormz.Data.Infrastructure
 {
-    public class SmartFormzContext : IdentityDbContext<ApplicationUser>
+    public class SmartFormzContext : IdentityDbContext<SmartFormzUser>
     {
         private static readonly string DefaultConnectionString = ((SmartFormzConfiguration)ConfigurationManager.GetSection("smartFormzConfiguration")).ConnectionString;
 
@@ -84,7 +85,16 @@ namespace SmartFormz.Data.Infrastructure
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUser>().ToTable("User").Property(p => p.Id).HasColumnName("UserId");
+            modelBuilder.Entity<SmartFormzUser>().ToTable("User").Property(p => p.Id).HasColumnName("UserId");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogin");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim");
+            modelBuilder.Entity<IdentityRole>().ToTable("Role");
+
         }
     }
 }

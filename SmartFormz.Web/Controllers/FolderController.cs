@@ -16,14 +16,14 @@ namespace SmartFormz.Web.Controllers
             ICollection<Folder> folders;
             if (id == "#")
             {
-                folders = Mediator.Send(new GetFolderTreeNodeRequest
+                folders = Mediator.Send(new ReadFolderTreeNodeRequest
                 {
                     ParentId = null
                 });
             }
             else
             {
-                folders = Mediator.Send(new GetFolderTreeNodeRequest
+                folders = Mediator.Send(new ReadFolderTreeNodeRequest
                 {
                     ParentId = long.Parse(id)
                 });

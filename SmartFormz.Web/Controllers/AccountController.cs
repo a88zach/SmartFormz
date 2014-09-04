@@ -4,7 +4,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SmartFormz.Business.Models.Security;
 using SmartFormz.Data.Infrastructure;
+using SmartFormz.Services.Security;
 using SmartFormz.Web.Models;
 
 namespace SmartFormz.Web.Controllers
@@ -12,21 +14,22 @@ namespace SmartFormz.Web.Controllers
     [Authorize]
     public class AccountController : SmartFormzController
     {
-        private ApplicationUserManager _userManager;
+        private SmartFormzUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager)
+        public AccountController(SmartFormzUserManager userManager)
         {
             UserManager = userManager;
         }
 
-        public ApplicationUserManager UserManager {
+        public SmartFormzUserManager UserManager
+        {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<SmartFormzUserManager>();
             }
             private set
             {
@@ -85,7 +88,7 @@ namespace SmartFormz.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new SmartFormzUser { UserName = model.Email, Email = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -400,7 +403,7 @@ namespace SmartFormz.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new SmartFormzUser { UserName = model.Email, Email = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -473,10 +476,16 @@ namespace SmartFormz.Web.Controllers
             }
         }
 
-        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        private async Task SignInAsync(SmartFormzUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
+            AuthenticationManager.SignIn(new AuthenticationProperties {IsPersistent = isPersistent},
+                await Mediator.SendAsync(new GenerateUserIdentityRequest()
+                {
+                    Manager = UserManager,
+                    User = user
+                })
+                );
         }
 
         private void AddErrors(IdentityResult result)

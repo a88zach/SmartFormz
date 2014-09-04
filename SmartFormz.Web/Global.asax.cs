@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Owin;
 using SmartFormz.Web.Infrastructure;
 
 namespace SmartFormz.Web
@@ -15,7 +16,6 @@ namespace SmartFormz.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DatabaseConfig.InitDb();
-
             IocContainer.Setup();
         }
     }

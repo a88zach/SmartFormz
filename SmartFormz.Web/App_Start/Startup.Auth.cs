@@ -4,7 +4,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using SmartFormz.Business.Models.Security;
 using SmartFormz.Data.Infrastructure;
+using SmartFormz.Data.Repositories;
 
 namespace SmartFormz.Web
 {
@@ -15,7 +17,7 @@ namespace SmartFormz.Web
         {
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(SmartFormzContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<SmartFormzUserManager>(SmartFormzUserManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -26,12 +28,12 @@ namespace SmartFormz.Web
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<SmartFormzUserManager, SmartFormzUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                        regenerateIdentity: (manager, user) => new UserRepository().GenerateUserIdentityAsync(manager, user))
                 }
             });
-            
+
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
